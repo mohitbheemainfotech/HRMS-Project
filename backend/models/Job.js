@@ -2,22 +2,43 @@ import mongoose from "mongoose";
 
 const jobSchema = new mongoose.Schema(
   {
-    title: String,
-    dept: String,
-    posted: { type: String, default: "Today" },
-    status: { type: String, default: "Open" },
-    desc: String,
+    title: {
+      type: String,
+      required: true,
+    },
 
-    applicants: [
-      {
-        name: String,
-        email: String,
-        resume: String,
-        appliedAt: { type: Date, default: Date.now },
-      },
-    ],
+    dept: {
+      type: String,
+      required: true,
+      default: "Engineering",
+    },
+
+    posted: {
+      type: String,
+      default: "Today",
+    },
+
+    status: {
+      type: String,
+      enum: ["Open", "Closed"],
+      default: "Open",
+    },
+
+    desc: {
+      type: String,
+      default: "",
+    },
+
+    applicants: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("Job", jobSchema);
+const Job =
+  mongoose.models.Job ||
+  mongoose.model("Job", jobSchema);
+
+export default Job;

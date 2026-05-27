@@ -9,6 +9,7 @@ import RecentActivities from "../../component/RecentActivities";
 import LeaveWidget from "../../component/LeaveWidget";
 import JobSummary from "../../component/JobSummary";
 import Footer from "../../component/Footer";
+import API from "../../api.js";
 
 const Dashboard = () => {
   const [stats, setStats] = useState({});
@@ -23,7 +24,7 @@ const Dashboard = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/dashboard");
+      const res = await API.get("http://localhost:8000/dashboard");
       setStats(res.data.stats);
       setActivities(res.data.activities);
       setAttendance(res.data.attendance);
@@ -34,7 +35,7 @@ const Dashboard = () => {
 
   const fetchJobs = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/jobs");
+      const res = await API.get("http://localhost:8000/jobs");
       setJobs(res.data);
     } catch (err) {
       console.log("Using default jobs");
@@ -45,7 +46,7 @@ const Dashboard = () => {
     <div className="text-white space-y-6 p-4 sm:p-6 md:p-4  md:ml-64">
 
       {/* Stats */}
-      <StatsCards />
+      <StatsCards stats={stats}/>
 
       {/* Quick Links */}
       <QuickLinks />

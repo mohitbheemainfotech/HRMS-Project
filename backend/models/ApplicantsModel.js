@@ -2,23 +2,40 @@ import mongoose from "mongoose";
 
 const applicantSchema = new mongoose.Schema(
   {
-    name: String,
-    email: String,
-    role: String, // job title
-    resume: String,
+    name: {
+      type: String,
+      required: true,
+    },
+
+    email: {
+      type: String,
+      required: true,
+    },
+
+    resume: {
+      type: String,
+      default: "",
+    },
+
+    role: {
+      type: String,
+      required: true,
+    },
+
+    date: {
+      type: String,
+    },
 
     status: {
       type: String,
-      default: "Under Review",
-      enum: ["Under Review", "Shortlisted", "Hired", "Rejected"],
-    },
-
-    jobId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Job",
+      default: "Applied",
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-export default mongoose.model("Applicant", applicantSchema);
+const Applicant = mongoose.model("Applicant", applicantSchema);
+
+export default Applicant; 

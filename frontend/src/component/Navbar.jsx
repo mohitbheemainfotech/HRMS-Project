@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const [search, setSearch] = useState("");
 
   const [open, setOpen] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -46,7 +47,7 @@ const Navbar = () => {
             {mobileMenu ? <X size={20} /> : <Menu size={20} />}
           </button>
 
-          <h1 className="text-sm sm:text-lg md:text-xl font-semibold">
+          <h1 onClick={() => navigate("/dashboard")} className="text-sm sm:text-lg md:text-xl font-semibold">
             Dashboard
           </h1>
         </div>
@@ -61,6 +62,8 @@ const Navbar = () => {
                 <input
                   type="text"
                   placeholder="Search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
                   className="bg-transparent outline-none text-xs lg:text-sm text-gray-200 placeholder-gray-400 w-full"
                 />
               </div>
@@ -151,16 +154,59 @@ const Navbar = () => {
         <div className="fixed top-14 sm:top-16 left-0 w-full bg-[#020617] text-white shadow-lg md:hidden p-4 z-40">
 
           <div className="space-y-3 text-sm">
-            <p onClick={() => navigate("/")} className="cursor-pointer">Dashboard</p>
-            <p className="cursor-pointer">Employees</p>
-            <p className="cursor-pointer">Attendance</p>
-            <p className="cursor-pointer">Payroll</p>
+            <p
+              onClick={() => {
+                setMobileMenu(false);
+                navigate("/");
+              }}
+              className="cursor-pointer"
+            >
+              Dashboard
+            </p>
+
+            <p
+              onClick={() => {
+                setMobileMenu(false);
+                navigate("/dashboard/employees");
+              }}
+              className="cursor-pointer"
+            >
+              Employees
+            </p>
+
+            <p
+              onClick={() => {
+                setMobileMenu(false);
+                navigate("/dashboard/attendance");
+              }}
+              className="cursor-pointer"
+            >
+              Attendance
+            </p>
+
+            <p
+              onClick={() => {
+                setMobileMenu(false);
+                navigate("/dashboard/payroll");
+              }}
+              className="cursor-pointer"
+            >
+              Payroll
+            </p>
           </div>
 
           {isLoggedIn && (
             <div className="mt-4 border-t border-gray-700 pt-3 space-y-2 text-sm">
-              <p onClick={() => navigate("/profile")} className="cursor-pointer">Profile</p>
-              <p onClick={() => navigate("/settings")} className="cursor-pointer">Settings</p>
+              <p onClick={() => navigate("/dashboard/profile")} className="cursor-pointer">Profile</p>
+              <p
+                onClick={() => {
+                  setMobileMenu(false);
+                  navigate("/dashboard/settings");
+                }}
+                className="cursor-pointer"
+              >
+                Settings
+              </p>
               <p onClick={handleLogout} className="text-red-400 cursor-pointer">Logout</p>
             </div>
           )}

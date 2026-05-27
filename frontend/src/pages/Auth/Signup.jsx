@@ -68,6 +68,7 @@ const Signup = () => {
         "http://localhost:8000/auth/signup",
         form
       );
+      localStorage.setItem("user", JSON.stringify(res.data.user));
 
       setSuccess("Signup successful! Redirecting to login...");
 

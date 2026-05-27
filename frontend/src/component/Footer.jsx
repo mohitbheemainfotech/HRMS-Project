@@ -1,7 +1,9 @@
 import React from "react";
 import { Mail, Phone, MapPin, Globe } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate()
   return (
     <footer className="">
       <div className="bg-gradient-to-r from-gray-700 to-gray-800 text-gray-300 px-4 sm:px-6 md:px-8 py-6 sm:py-8">
@@ -28,11 +30,11 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-medium mb-3">Quick Links</h3>
             <ul className="space-y-2 text-xs sm:text-sm">
-              <li className="hover:text-white cursor-pointer">Dashboard</li>
-              <li className="hover:text-white cursor-pointer">Employees</li>
-              <li className="hover:text-white cursor-pointer">Attendance</li>
-              <li className="hover:text-white cursor-pointer">Payroll</li>
-              <li className="hover:text-white cursor-pointer">Recruitment</li>
+              <li className="hover:text-white cursor-pointer" onClick={()=>navigate("/")}>Dashboard</li>
+              <li className="hover:text-white cursor-pointer" onClick={()=>navigate("/dashboard/employees")}>Employees</li>
+              <li className="hover:text-white cursor-pointer" onClick={()=>navigate("/dashboard/attendance")}>Attendance</li>
+              <li className="hover:text-white cursor-pointer" onClick={()=>navigate("/dashboard/payroll")}>Payroll</li>
+              <li className="hover:text-white cursor-pointer" onClick={()=>navigate("/dashboard/applicant")}>Recruitment</li>
             </ul>
           </div>
 

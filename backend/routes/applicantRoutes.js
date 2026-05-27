@@ -1,14 +1,20 @@
 import express from "express";
+
 import {
   getApplications,
   applyJob,
   updateApplicationStatus,
-} from "../controllers/applicantsController.js";
+} from "../controllers/applicantController.js";
 
-const applicantRoutes = express.Router();
+const applicantRouter = express.Router();
 
-applicantRoutes.get("/", getApplications);
-applicantRoutes.post("/", applyJob);
-applicantRoutes.put("/:id", updateApplicationStatus);
+// GET ALL APPLICANTS
+applicantRouter.get("/", getApplications);
 
-export default applicantRoutes;
+// APPLY JOB
+applicantRouter.post("/:id/apply", applyJob);
+
+// UPDATE STATUS
+applicantRouter.put("/:id", updateApplicationStatus);
+
+export default applicantRouter;

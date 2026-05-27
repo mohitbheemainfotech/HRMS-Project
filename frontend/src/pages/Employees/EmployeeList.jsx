@@ -70,12 +70,21 @@ const EmployeeList = () => {
           </p>
         </div>
 
-        <button
-          onClick={() => navigate("/dashboard/employees/add")}
-          className="bg-gradient-to-r from-indigo-500 to-purple-600 px-4 py-2 rounded-lg text-sm hover:opacity-90"
-        >
-          + Add Employee
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate(-1)}
+            className="border border-gray-600 px-4 py-2 rounded-lg text-sm hover:bg-gray-700"
+          >
+            ← Back
+          </button>
+
+          <button
+            onClick={() => navigate("/dashboard/employees/add")}
+            className="bg-gradient-to-r from-indigo-500 to-purple-600 px-4 py-2 rounded-lg text-sm hover:opacity-90"
+          >
+            + Add Employee
+          </button>
+        </div>
 
       </div>
 
@@ -175,11 +184,10 @@ const EmployeeList = () => {
                     {/* STATUS */}
                     <td className="p-4">
                       <span
-                        className={`px-3 py-1 rounded-full text-xs ${
-                          emp.status === "Active"
+                        className={`px-3 py-1 rounded-full text-xs ${emp.status === "Active"
                             ? "bg-green-500/10 text-green-400"
                             : "bg-red-500/10 text-red-400"
-                        }`}
+                          }`}
                       >
                         ● {emp.status}
                       </span>

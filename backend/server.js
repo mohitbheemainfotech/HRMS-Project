@@ -7,6 +7,12 @@ import authRoutes from "./routes/authRoutes.js";
 import employeeRoutes from "./routes/employeeRoutes.js";
 import jobRoutes from "./routes/jobRoutes.js";
 import applicantRoutes from "./routes/applicantRoutes.js";
+import attendanceRoutes from "./routes/attendanceRoutes.js";
+import router from "./routes/dashboardRoutes.js";
+import leaveRoutes from "./routes/leaveRoutes.js";
+import payrollRouter from "./routes/payrollRoutes.js";
+import applicantRouter from "./routes/applicantRoutes.js";
+import performanceReviewRouter from "./routes/performanceReviewRoutes.js";
 
 dotenv.config();
 
@@ -34,7 +40,12 @@ const PORT = process.env.PORT || 8000;
 app.use("/auth", authRoutes);
 app.use("/employees", employeeRoutes);
 app.use("/jobs",jobRoutes);
-app.use("applicant",applicantRoutes)
+app.use("/applicant",applicantRouter);
+app.use("/attendance",attendanceRoutes);
+app.use("/dashboard", router);
+app.use("/leaves", leaveRoutes);
+app.use("/payroll", payrollRouter);
+app.use("/performance-review",performanceReviewRouter)
 
 // SERVER START
 app.listen(PORT, () => {

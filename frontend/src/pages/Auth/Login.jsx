@@ -4,7 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 
 const Login = () => {
-  const navigate = useNavigate();
+   const navigate = useNavigate();
 
   const [form, setForm] = useState({
     email: "",
@@ -15,11 +15,22 @@ const Login = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // ✅ Auto redirect if already logged in
+  // ✅ CHECK TOKEN + EXPIRY
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/dashboard");
+    const expiry = localStorage.getItem("tokenExpiry");
+
+    if (token && expiry) {
+      const currentTime = new Date().getTime();
+
+      // ✅ token valid
+      if (currentTime < Number(expiry)) {
+        navigate("/dashboard");
+      } else {
+        // ✅ token expired after 5 min
+        localStorage.removeItem("token");
+        localStorage.removeItem("tokenExpiry");
+      }
     }
   }, []);
 
@@ -31,17 +42,20 @@ const Login = () => {
     if (!form.email || !form.password) {
       return "All fields are required";
     }
+
     if (!/\S+@\S+\.\S+/.test(form.email)) {
       return "Invalid email format";
     }
+
     return "";
   };
 
-  // ✅ REAL LOGIN API CALL
+  // ✅ LOGIN
   const handleLogin = async (e) => {
     e.preventDefault();
 
     const validationError = validate();
+
     if (validationError) {
       setError(validationError);
       return;
@@ -56,10 +70,19 @@ const Login = () => {
         form
       );
 
-      // ✅ Save token
+      // ✅ SAVE TOKEN
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      // ✅ Redirect
+      // ✅ 5 MIN EXPIRY
+      const expiryTime =
+        new Date().getTime() + 1 * 60 * 1000;
+
+      localStorage.setItem(
+        "tokenExpiry",
+        expiryTime
+      );
+
       navigate("/dashboard");
 
     } catch (err) {

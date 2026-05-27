@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const rolesData = [
   {
@@ -38,6 +39,7 @@ const SystemSettings = () => {
   const [roles, setRoles] = useState(rolesData);
   const [editingIndex, setEditingIndex] = useState(null);
   const [newRole, setNewRole] = useState("");
+  const navigate = useNavigate();
 
   const [departments, setDepartments] = useState([
     "Engineering",
@@ -75,7 +77,12 @@ const SystemSettings = () => {
 
   return (
     <div className="min-h-screen bg-[#0b1220] text-white p-4 md:p-8 md:ml-64 space-y-6 mt-8">
-
+      <button
+        onClick={() => navigate(-1)}
+        className="md:hidden border border-gray-600 px-4 py-2 rounded-lg text-sm hover:bg-gray-700"
+      >
+        ← Back
+      </button>
       {/* HEADER */}
       <div className="flex justify-between items-center">
         <div>
@@ -244,14 +251,12 @@ const SystemSettings = () => {
 
             <button
               onClick={() => toggleHandler(key)}
-              className={`w-10 h-5 flex items-center rounded-full p-1 ${
-                toggles[key] ? "bg-indigo-600" : "bg-gray-600"
-              } cursor-pointer`}
+              className={`w-10 h-5 flex items-center rounded-full p-1 ${toggles[key] ? "bg-indigo-600" : "bg-gray-600"
+                } cursor-pointer`}
             >
               <div
-                className={`bg-white w-4 h-4 rounded-full transform transition ${
-                  toggles[key] ? "translate-x-5" : ""
-                }`}
+                className={`bg-white w-4 h-4 rounded-full transform transition ${toggles[key] ? "translate-x-5" : ""
+                  }`}
               />
             </button>
           </div>

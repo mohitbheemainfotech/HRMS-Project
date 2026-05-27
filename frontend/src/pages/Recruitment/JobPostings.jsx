@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import API from "../../api.js";
+import { useNavigate } from "react-router-dom";
 
 const JobPostings = () => {
   const [jobs, setJobs] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState(null);
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     title: "",
@@ -84,28 +86,34 @@ const JobPostings = () => {
     setShowForm(true);
   };
 
-  const handleApply = async (id) => {
-    const name = prompt("Enter your name");
-    const email = prompt("Enter your email");
+  const handleApply = async (job) => {
+  const name = prompt("Enter your name");
+  const email = prompt("Enter your email");
 
-    if (!name || !email) return;
+  if (!name || !email) return;
 
-    try {
-      await API.post(`/jobs/${id}/apply`, {
-        name,
-        email,
-        resume: "uploaded.pdf",
-      });
+  try {
+    await API.post(`/applicant/${job._id}/apply`, {
+      name,
+      email,
+      resume: "uploaded.pdf",
+    });
 
-      alert("Applied Successfully");
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    alert("Applied Successfully");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-[#0b1220] text-white p-3 sm:p-4 md:p-8 md:ml-64 space-y-6 mt-8">
-
+      <button
+        onClick={() => navigate(-1)}
+        className="md:hidden border border-gray-600 px-4 py-2 rounded-lg text-sm hover:bg-gray-700"
+      >
+        ← Back
+      </button>
       {/* HEADER */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
 
@@ -236,7 +244,7 @@ const JobPostings = () => {
                     <div className="flex flex-wrap gap-2">
 
                       <button
-                        onClick={() => handleApply(job._id)}
+                        onClick={() => handleApply(job)}
                         className="bg-blue-500 px-2 py-1 rounded text-xs"
                       >
                         Apply
